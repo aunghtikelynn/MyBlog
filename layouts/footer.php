@@ -1,7 +1,7 @@
 <?php
     include "dbconnect.php";
 
-    $sql = "SELECT * FROM categories";
+    $sql = "SELECT * FROM categories ORDER BY id DESC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $category_name = $stmt->fetchAll();
@@ -29,9 +29,9 @@
                                 <div class="col-sm-6">
                                     <ul class="list-unstyled mb-0">
                                     <?php 
-                                        foreach($category_name as $name){
+                                        foreach($category_name as $category){
                                     ?>
-                                        <li><a href="#!"><?= $name['name'] ?></a></li>
+                                        <li><a href="index.php?category_id=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
                                     <?php } ?>
                                     </ul>
                                 </div>
