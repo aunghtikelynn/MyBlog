@@ -7,7 +7,15 @@
         $category_id = $_POST['category_id'];
         $description = $_POST['description'];
         $user_id = 1;
-        $image = "eg.jpg";
+        $image_array = $_FILES['image'];
+        // var_dump($image);
+        if(isset($image_array) && $image_array['size'] > 0) {
+            $dir = "../images/";
+            $image_dir = $dir.$image_array['name']; //../images/eg.jpg ဖိုင်တကယ်သိမ်းမည့်နေရာ
+            $image = 'admin/images/'.$image_array['name']; //database ထဲမှာ သိမ်းမည့်ပတ်လမ်း
+            $tmp_name = $image_array['tmp_name'];
+            move_uploaded_file($tmp_name,$image_dir);
+        }
         // echo "$title <br> $category_id <br> $description";
         $sql = "INSERT INTO posts (title,image,description,category_id,user_id) VALUES (:title,:image,:description,:category_id,:user_id)";
         $stmt = $conn->prepare($sql);
@@ -45,7 +53,7 @@
             Create Posts
         </div>
         <div class="card-body">
-            <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post"> 
+            <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" enctype="multipart/form-data"> 
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control" id="title" name="title">
