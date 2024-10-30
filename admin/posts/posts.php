@@ -8,7 +8,17 @@
     $posts = $stmt->fetchAll();
     // var_dump($posts);
 
-?> 
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $id = $_POST['id'];
+        // echo $id;
+        $sql = "DELETE FROM posts WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id',$id);
+        $stmt->execute();
+        header("location:posts.php");
+    }
+
+?>  
 
 <div class="container my-5">
     <div class="mb-5">
@@ -38,7 +48,7 @@
                         <td><?= $post['u_name'] ?></td>
                         <td>
                             <button class="btn btn-sm btn-warning">Edit</button>
-                            <button class="btn btn-sm btn-danger">Delete</button>
+                            <button class="btn btn-sm btn-danger delete" data-id="<?= $post['id'] ?>">Delete</button>
                             <a class="btn btn-sm btn-primary" href="../../detail.php?id=<?= $post['id'] ?>" target="_blank">Detail</a>
                         </td>
                     </tr>
@@ -57,6 +67,29 @@
             </tfoot>
         </table>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h1 class="modal-title fs-5 text-light" id="exampleModalLabel">Delete</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>Are you sure delete?</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <form action="" method="post">
+            <input type="hidden" name="id" id="delete_id">
+            <button type="submit" class="btn btn-danger">Yes</button>
+        </form>
+        
+      </div>
+    </div>
+  </div>
 </div>
 
 <?php

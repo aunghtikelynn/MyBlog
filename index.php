@@ -50,7 +50,7 @@
                     <div class="card-body">
                         <div class="small text-muted"><?= date('F d, Y',strtotime($latest_post['create_at'])) ?></div>
                         <h2 class="card-title"><?= $latest_post['title'] ?></h2>
-                        <p class="card-text"><?= substr($latest_post['description'],0,150) ?>.....</p>
+                        <p class="card-text"><?= substr(strip_tags($latest_post['description']),0,150) ?>.....</p>
                         <a class="btn btn-primary" href="detail.php?id=<?= $latest_post['id'] ?>">Read more →</a>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         <div class="card-body">
                             <div class="small text-muted"><?= date('F d, Y',strtotime($post['create_at']))?></div>
                             <h2 class="card-title h4"><?= $post['title']?></h2>
-                            <p class="card-text"><?= substr($post['description'],0,150) ?></p>
+                            <p class="card-text"><?= substr(strip_tags($post['description']),0,150) ?></p>
                             <a class="btn btn-primary" href="detail.php?id=<?= $post['id'] ?>">Read more →</a>
                         </div>
                     </div>
