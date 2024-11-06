@@ -12,7 +12,7 @@
         if(isset($image_array) && $image_array['size'] > 0) {
             $dir = "../images/";
             $image_dir = $dir.$image_array['name']; //../images/eg.jpg ဖိုင်တကယ်သိမ်းမည့်နေရာ
-            $image = 'admin/images/'.$image_array['name']; //database ထဲမှာ သိမ်းမည့်ပတ်လမ်း
+            $image = 'images/'.$image_array['name']; //database ထဲမှာ သိမ်းမည့်ပတ်လမ်း
             $tmp_name = $image_array['tmp_name'];
             move_uploaded_file($tmp_name,$image_dir);
         }

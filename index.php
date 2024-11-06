@@ -46,7 +46,7 @@
             ?>
                 <!-- Featured blog post-->
                 <div class="card mb-4">
-                    <a href="#!"><img class="card-img-top" src="<?= $latest_post['image'] ?>" alt="..." /></a>
+                    <a href="#!"><img class="card-img-top" src="admin/<?= $latest_post['image'] ?>" alt="..." /></a>
                     <div class="card-body">
                         <div class="small text-muted"><?= date('F d, Y',strtotime($latest_post['create_at'])) ?></div>
                         <h2 class="card-title"><?= $latest_post['title'] ?></h2>
@@ -64,7 +64,7 @@
                     <!-- Blog post-->
                      <!-- substr(string, start, number) -->
                     <div class="card mb-4">
-                        <a href="#!"><img class="card-img-top" src="<?= $post['image']?>" alt="..." /></a>
+                        <a href="#!"><img class="card-img-top" src="admin/<?= $post['image']?>" alt="..." /></a>
                         <div class="card-body">
                             <div class="small text-muted"><?= date('F d, Y',strtotime($post['create_at']))?></div>
                             <h2 class="card-title h4"><?= $post['title']?></h2>
