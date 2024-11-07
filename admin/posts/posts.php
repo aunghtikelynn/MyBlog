@@ -1,4 +1,7 @@
 <?php
+session_start();
+if($_SESSION['user_id']){
+
     include "../layouts/navbar_side.php";
 
     include "../../dbconnect.php";
@@ -93,5 +96,8 @@
 </div>
 
 <?php
-    include "../layouts/footer.php"
+    include "../layouts/footer.php";
+}else{
+    header("location:../login.php");
+}
 ?> 

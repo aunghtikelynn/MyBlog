@@ -1,4 +1,7 @@
 <?php
+session_start();
+if($_SESSION['user_id']){ 
+
     include "../../dbconnect.php";
     include "../layouts/navbar_side.php";
 
@@ -6,9 +9,10 @@
         $title = $_POST['title'];
         $category_id = $_POST['category_id'];
         $description = $_POST['description'];
-        $user_id = 1;
+        $user_id = $_SESSION['user_id'];
         $image_array = $_FILES['image'];
         // var_dump($image);
+
         if(isset($image_array) && $image_array['size'] > 0) {
             $dir = "../images/";
             $image_dir = $dir.$image_array['name']; //../images/eg.jpg ဖိုင်တကယ်သိမ်းမည့်နေရာ
@@ -16,6 +20,7 @@
             $tmp_name = $image_array['tmp_name'];
             move_uploaded_file($tmp_name,$image_dir);
         }
+        
         // echo "$title <br> $category_id <br> $description";
         $sql = "INSERT INTO posts (title,image,description,category_id,user_id) VALUES (:title,:image,:description,:category_id,:user_id)";
         $stmt = $conn->prepare($sql);
@@ -87,5 +92,9 @@
 </html>
 
 <?php
-    include "../layouts/footer.php"
+    include "../layouts/footer.php";
+    
+}else{
+    header("location:../login.php");
+}
 ?>

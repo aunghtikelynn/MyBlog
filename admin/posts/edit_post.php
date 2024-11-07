@@ -1,4 +1,7 @@
 <?php
+session_start();
+if($_SESSION['user_id']){
+    
     include "../../dbconnect.php";
     include "../layouts/navbar_side.php";
 
@@ -21,9 +24,10 @@
         $title = $_POST['title'];
         $category_id = $_POST['category_id'];
         $description = $_POST['description'];
-        $user_id = 1;
+        $user_id = $_SESSION['user_id'];
         $image_array = $_FILES['image'];
         // var_dump($image);
+
         if(isset($image_array) && $image_array['size'] > 0) {
             $dir = "../images/";
             $image_dir = $dir.$image_array['name']; //../images/eg.jpg ဖိုင်တကယ်သိမ်းမည့်နေရာ
@@ -34,6 +38,7 @@
             $image = $_POST['old_image'];
         }
         // echo "$title <br> $category_id <br> $description";
+    
         $sql = "UPDATE posts SET title=:title, image=:image, description=:description, category_id=:category_id, user_id=:user_id WHERE id=:id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id',$post_id);
@@ -119,5 +124,8 @@
 </html>
 
 <?php
-    include "../layouts/footer.php"
+    include "../layouts/footer.php";
+}else{
+    header("location:../login.php");
+}
 ?>
