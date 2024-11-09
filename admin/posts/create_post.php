@@ -49,8 +49,8 @@ if($_SESSION['user_id']){
 </head>
 <body>
     <div class="container my-5">
-        <h3 class="d-inline">Posts</h3>
-        <a href="" class="btn btn-danger float-end">Cancel</a>
+        <h3 class="d-inline">Create Posts</h3>
+        <a href="posts.php" class="btn btn-danger float-end">Cancel</a>
         <p><a href="">Dashboard</a> / <a href="posts.php">Posts</a> / Posts</p>
     </div>
     <div class="card m-3">

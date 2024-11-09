@@ -14,7 +14,7 @@ if($_SESSION['user_id'] && $_SESSION['user_role'] == 'admin'){
 <div class="container my-5">
     <div class="mb-5">
         <h3 class="d-inline">Users Lists</h3>
-        <a href="" class="btn btn-primary float-end">Create Users</a>
+        <a href="create_user.php" class="btn btn-primary float-end">Create Users</a>
     </div>
     <div class="card">
         <table class="table table-bordered">
@@ -39,7 +39,7 @@ if($_SESSION['user_id'] && $_SESSION['user_role'] == 'admin'){
                         <td><img src="<?= $user['profile'] ?>" alt="" width="100px"></td>
                         <td><?= $user['role'] ?></td>
                         <td>
-                            <button class="btn btn-sm btn-warning">Edit</button>
+                            <a href="edit_user.php"><button class="btn btn-sm btn-warning">Edit</button></a>
                             <button class="btn btn-sm btn-danger">Delete</button>
                         </td>
                     </tr>
