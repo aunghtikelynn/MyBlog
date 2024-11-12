@@ -5,6 +5,28 @@ if($_SESSION['user_id']){
     include "../../dbconnect.php";
     include "../layouts/navbar_side.php";
 
+    $id = $_GET['id'];
+
+    $sql = "SELECT * FROM categories WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id',$id);
+    $stmt->execute();
+    $category = $stmt->fetch();
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $category_id = $_POST['category_id'];
+        $name = $_POST['name'];
+        echo "$name";
+
+        $sql = "UPDATE categories SET name=:name WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id',$category_id);
+        $stmt->bindParam(':name',$name);
+        $stmt->execute();
+
+        header("Location: categories.php");
+    }
+
 ?>
 
 <div class="container my-5">
@@ -17,11 +39,18 @@ if($_SESSION['user_id']){
         Edit Categories
     </div>
     <div class="card-body">
-    <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name">
-        </div>
+        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="category_id" id="" value="<?= $category['id'] ?>" >
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="<?= $category['name'] ?>">
+            </div>
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+        </form>
     </div>
+    
 </div>
 
 <?php

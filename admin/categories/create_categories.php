@@ -5,6 +5,17 @@ if($_SESSION['user_id']){
     include "../../dbconnect.php";
     include "../layouts/navbar_side.php";
 
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $name = $_POST['name'];
+
+        $sql = "INSERT INTO categories (name) VALUES (:name)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':name',$name);
+        $stmt->execute();
+
+        header("Location: categories.php");
+    }
+
 ?>
 
 <div class="container my-5">
@@ -17,10 +28,15 @@ if($_SESSION['user_id']){
         Create Categories
     </div>
     <div class="card-body">
-    <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name">
-        </div>
+        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="submit">Create</button>
+            </div>
+        </form>
     </div>
 </div>
 

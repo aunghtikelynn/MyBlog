@@ -14,6 +14,8 @@ if($_SESSION['user_id']){
     $user = $stmt->fetch();
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $user_id = $_POST['user_id'];
+
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
@@ -31,8 +33,9 @@ if($_SESSION['user_id']){
             $profile = $_POST['old_profile'];
         }
 
-        $sql = "INSERT INTO users (name,email,password,role,profile) VALUES (:name,:email,:password,:role,:profile)";
+        $sql = "UPDATE users SET name=:name, email=:email, password=:password, role=:role, profile=:profile WHERE id=:id";
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id',$user_id);
         $stmt->bindParam(':name',$name);
         $stmt->bindParam(':email',$email);
         $stmt->bindParam(':password',$password);
@@ -56,26 +59,43 @@ if($_SESSION['user_id']){
     </div>
     <div class="card-body">
         <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="user_id" id="" value="<?= $user['id'] ?>">
             <div class="mb-3">
-                <label for="profile" class="form-label">Profile</label>
-                <input type="file" class="form-control" id="profile" name="profile">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="image-tab" data-bs-toggle="tab" data-bs-target="#image-tab-pane" type="button" role="tab" aria-controls="image-tab-pane" aria-selected="true">Profile</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="new_image-tab" data-bs-toggle="tab" data-bs-target="#new_image-tab-pane" type="button" role="tab" aria-controls="new_image-tab-pane" aria-selected="false">New Profile</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab" tabindex="0">
+                        <img src="../<?= $user['profile'] ?>" alt="" class="w-50 h-50 py-5">
+                        <input type="hidden" name="old_profile" value="<?= $user['profile'] ?>" >
+                    </div>
+                    <div class="tab-pane fade" id="new_image-tab-pane" role="tabpanel" aria-labelledby="new_image-tab" tabindex="0">
+                        <input class="form-control my-5" type="file" id="profile" name="profile">
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name">
+                <input type="text" class="form-control" id="name" name="name" value="<?= $user['name'] ?>">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="email" name="email">
+                <input type="text" class="form-control" id="email" name="email" value="<?= $user['email'] ?>">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="text" class="form-control" id="password" name="password">
+                <input type="text" class="form-control" id="password" name="password" value="<?= $user['password'] ?>">
             </div>
             <div class="mb-3">
                 <label for="role" class="form-label">Role</label>
-                <select name="" id="" class="form-select">
-                    <option selected>Choose ...</option>
+                <select name="role" id="role" class="form-select">
+                    <option selected><?= $user['role'] ?></option>
+                    <!-- <option value=""><?= $user['role'] ?></option> -->
                     <option value="admin">Admin</option>
                     <option value="author">Author</option>
                 </select>

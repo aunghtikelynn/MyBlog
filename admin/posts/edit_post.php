@@ -108,7 +108,6 @@ if($_SESSION['user_id']){
                             <input class="form-control my-5" type="file" id="image" name="image">
                         </div>
                     </div>
-                    
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>

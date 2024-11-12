@@ -48,10 +48,10 @@ if($_SESSION['user_id'] && $_SESSION['user_role'] == 'admin'){
                         <td><?= $user['id'] ?></td>
                         <td><?= $user['name'] ?></td>
                         <td><?= $user['email'] ?></td>
-                        <td><img src="<?= $user['profile'] ?>" alt="" width="100px"></td>
+                        <td><img src="../<?= $user['profile'] ?>" alt="" width="100px"></td>
                         <td><?= $user['role'] ?></td>
                         <td>
-                            <a href="edit_user.php"><button class="btn btn-sm btn-warning">Edit</button></a>
+                            <a href="edit_user.php?id=<?= $user['id'] ?>"><button class="btn btn-sm btn-warning">Edit</button></a>
                             <button class="btn btn-sm btn-danger delete" data-id="<?= $user['id'] ?>">Delete</button>
                         </td>
                     </tr>
