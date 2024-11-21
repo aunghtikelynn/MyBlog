@@ -5,7 +5,35 @@ if($_SESSION['user_id']){
     include "../../dbconnect.php";
     include "../layouts/navbar_side.php";
 
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $role =$_POST['role'];
+        $profile_array = $_FILES['profile'];
+        
+        if(isset($profile_array) && $profile_array['size'] > 0){
+            $dir = "../images/";
+            $profile_dir = $dir.$profile_array['name'];
+            $profile = 'images/'.$profile_array['name'];
+            $tmp_name = $profile_array['tmp_name'];
+            move_uploaded_file($tmp_name,$profile_dir);
+        }
 
+        // echo "$name , $email , $password, $role, $profile";
+        $sql = "INSERT INTO users(name,email,password,role,profile) VALUES (:name,:email,:password,:role,:profile)";
+        $stmt = $conn->prepare($sql);
+        // $stmt->bindParam(':id',$user_id);
+        $stmt->bindParam(':name',$name);
+        $stmt->bindParam(':email',$email);
+        $stmt->bindParam(':password',$password);
+        $stmt->bindParam(':role',$role);
+        $stmt->bindParam(':profile',$profile);
+        $stmt->execute();
+
+        header("Location: users.php");
+
+    }
 ?>
 
 <div class="container my-5">
